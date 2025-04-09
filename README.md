@@ -30,30 +30,52 @@ Projeto desenvolvido durante a formação **"Django: crie aplicações em Python
 alura-space/
 ├── galeria/
 │   ├── migrations/
-│   ├── templates/
+│   ├── __init__.py
+│   ├── admin.py
+│   ├── apps.py
+│   ├── models.py
+│   ├── tests.py
+│   ├── urls.py
+│   ├── views.py 
+├── setup/
+│   ├── static/
+│   │   ├── assets/
+│   │   │   ├── favicon/
+│   │   │   ├── ícones/
+│   │   │   ├── imagens/
+│   │   │   ├── logo/
+│   │   ├── styles/
+│   │   │   ├── style.css
+│   ├── __init__.py
+│   ├── asgi.py
+│   ├── settings.py
+│   ├── urls.py
+│   ├── wsgi.py
+├── static/
+│   │   ├── admin/
+│   │   │   ├── css/
+│   │   │   ├── img/
+│   │   │   ├── js/
+│   │   ├── assets/
+│   │   │   ├── favicon/
+│   │   │   ├── ícones/
+│   │   │   ├── imagens/
+│   │   │   ├── logo/
+│   │   ├── styles/
+│   │   │   ├── style.css
+├── templates/
 │   │   ├── galeria/
 │   │   │   ├── partials/
 │   │   │   │   ├── _footer.html
-│   │   │   │   ├── _header.html
+│   │   │   │   ├── _menu.html
 │   │   │   ├── base.html
 │   │   │   ├── buscar.html
 │   │   │   ├── index.html
 │   │   │   ├── imagem.html
-│   ├── static/
-│   │   ├── styles/
-│   │   │   ├── style.css
-│   │   ├── images/
-│   ├── views.py
-│   ├── urls.py
-│   ├── models.py
-├── setup/
-│   ├── settings.py
-│   ├── urls.py
-│   ├── wsgi.py
-├── manage.py
-├── requirements.txt
-├── venv
 ├── .gitignore
+├── manage.py
+├── README.md
+├── requirements.txt
 ```
 
 ---
