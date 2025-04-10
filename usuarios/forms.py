@@ -31,14 +31,38 @@ class LoginForm(forms.Form):
 class CadastroForm(forms.Form):
 
     # Campos
-    nome_cadastro = forms.CharField(
-        label='Nome completo', # Rotulo
+    primeiro_nome = forms.CharField(
+        label='Nome', # Rotulo
         required=True, # Obrigatorio
         max_length=100, # Tamanho
         widget=forms.TextInput(
             attrs={
                 'class': 'form-control',
-                'placeholder': 'Ex: João Silva'
+                'placeholder': 'Ex: João'
+            }
+        )
+    
+    )
+
+    ultimo_nome = forms.CharField(
+        label='Sobrenome', # Rotulo
+        required=True, # Obrigatorio
+        max_length=100, # Tamanho
+        widget=forms.TextInput(
+            attrs={
+                'class': 'form-control',
+                'placeholder': 'Ex: Silva'
+            }
+        )
+    )
+    nome_cadastro = forms.CharField(
+        label='Usuário', # Rotulo
+        required=True, # Obrigatorio
+        max_length=100, # Tamanho
+        widget=forms.TextInput(
+            attrs={
+                'class': 'form-control',
+                'placeholder': 'Ex: joao'
             }
         ) 
     )
