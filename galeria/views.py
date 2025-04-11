@@ -1,9 +1,15 @@
 from django.shortcuts import render
 from .models import Fotografia
-from django.shortcuts import get_object_or_404
+from django.shortcuts import get_object_or_404, redirect
+from django.contrib import messages
 
 ''' Função para renderizar a página inicial da galeria '''
 def index(request):
+    
+    # Verifica se o usuário está logado
+    if not request.user.is_authenticated:
+        messages.error(request, 'Você precisa estar logado para acessar essa página.')
+        return redirect('login')
 
     dados = Fotografia.objects.order_by('-data_fotografia').filter(publicada=True) # Ordena as fotografias por data de publicação e exibe apenas as fotografias publicadas
     return render(request,'galeria/index.html', {'cards': dados}) # Renderiza a página inicial da galeria
@@ -15,6 +21,11 @@ def imagem(request, foto_id):
     return render(request, 'galeria/imagem.html', {'fotografia': fotografia}) # Renderiza a página da fotografia
 
 def buscar(request):
+
+    # Verifica se o usuário está logado
+    if not request.user.is_authenticated:
+        messages.error(request, 'Você precisa estar logado para acessar essa página.')
+        return redirect('login')
 
     busca = Fotografia.objects.order_by('-data_fotografia').filter(publicada=True) 
 
