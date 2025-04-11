@@ -1,4 +1,7 @@
+from typing import Any
 from django import forms
+from django.contrib.auth.models import User # Importa o modelo User para usuários
+
 
 ''' Formulario de login '''
 class LoginForm(forms.Form):
@@ -102,3 +105,24 @@ class CadastroForm(forms.Form):
             }
         )
     )
+
+    def clean_nome_cadastro(self): # Funcao para verificar se o nome de usuário possui espaços
+        nome = self.cleaned_data['nome_cadastro'] 
+
+        if nome:
+            nome = nome.strip() # Remove espaços em branco no inicio e fim
+            if ' ' in nome: # Verifica se o nome possui espaços
+                raise forms.ValidationError('Não é possivel inserir espaços nesse campo.')
+            else:
+                return nome
+        
+    def clean_senha_2(self): # Funcao para verificar se as senhas sao iguais
+        senha_1 = self.cleaned_data['senha_1']
+        senha_2 = self.cleaned_data['senha_2']           
+        # Verifica se o formulário é válido
+        
+        if senha_1 and senha_2: # Verifica se as senhas são iguais
+            if senha_1 != senha_2:
+                raise forms.ValidationError('As senhas devem ser iguais.')
+            else:
+                return senha_2

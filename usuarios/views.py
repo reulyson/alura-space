@@ -36,12 +36,8 @@ def cadastro(request): # Função para renderizar a página de cadastro
     # Verifica se a requisição é do tipo POST (POST é usado para enviar dados)
     if request.method == 'POST': 
         form = CadastroForm(request.POST) # Cria um formulário com os dados da requisição
-        
-        # Verifica se o formulário é válido
-        if form.is_valid(): 
-            if form['senha_1'].value() != form['senha_2'].value(): # Verifica se as senhas são iguais
-                messages.error(request, 'As senhas não são iguais!')
-                return redirect('cadastro') # Redireciona para a página de cadastro
+
+        if form.is_valid(): # Verifica se o formulário é válido
             
             # Armazena os dados do formulário
             primeiro = form['primeiro_nome'].value()
