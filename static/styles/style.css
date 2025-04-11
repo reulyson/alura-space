@@ -105,6 +105,7 @@ table {
     align-items: center;
     background-color: transparent;
     border: none;
+    color: white; /* Adiciona cor branca para o texto */
     font-size: 1rem;
     height: 24px;
     padding: 10px;
