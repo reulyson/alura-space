@@ -1,5 +1,6 @@
 from django.db import models
 from datetime import datetime
+from django.contrib.auth.models import User
 
 ''' Estrutura do banco de dados da galeria '''
 class Fotografia(models.Model):
@@ -20,6 +21,13 @@ class Fotografia(models.Model):
     foto = models.ImageField(upload_to='fotos/%Y/%m/%d', blank=True)
     publicada = models.BooleanField(default=False)
     data_fotografia = models.DateTimeField(default=datetime.now, blank=False)
+    usuario = models.ForeignKey( # chave estrangeira
+        to=User, # qual model esta sendo relacionada
+        on_delete=models.SET_NULL, # o que fazer se o usuário for excluído
+        null=True,
+        blank=False,
+        related_name='user' # nome da relação
+    )
 
     ''' Retorna o nome da fotografia '''
     def __str__(self):
