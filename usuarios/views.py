@@ -5,6 +5,11 @@ from .forms import LoginForm, CadastroForm, NovaImagemForm # Importa os formula�
 
 def login(request): # Função para renderizar a página de login
 
+    # Verifica se o usuário está logado
+    if request.user.is_authenticated:
+        messages.error(request, 'Você já está logado!')
+        return redirect('index')
+
     form = LoginForm()
 
     if request.method == 'POST': 
@@ -30,6 +35,11 @@ def login(request): # Função para renderizar a página de login
     return render(request, 'usuarios/login.html', {'form': form, 'usa_bootstrap': True})
 
 def cadastro(request): # Função para renderizar a página de cadastro
+
+    # Verifica se o usuário está logado
+    if request.user.is_authenticated:
+        messages.error(request, 'Você já está logado!')
+        return redirect('index')
 
     form = CadastroForm()
 

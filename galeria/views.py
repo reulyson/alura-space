@@ -35,7 +35,7 @@ def imagem(request, foto_id):
     return render(request, 'galeria/imagem.html', {
         'fotografia': fotografia,
         'categorias': categorias,
-        'usa_bootstrap': True
+        'usa_bootstrap': False
     }) # Renderiza a página da fotografia
 
 def deletar_foto(request, foto_id):

@@ -3,7 +3,11 @@
     <section class="conteudo">
         <section class="banner">
             <img class="banner__imagem" src="{% static '/assets/imagens/Banner(2).png' %}" alt="banner Alura Space">
-            <h1 class="banner__titulo"> A galeria mais completa de fotos do espaço!</h1>
+            <h1 class="banner__titulo">
+                {% if user.is_authenticated %}
+                Bem vindo(a) {{user.first_name}} a galeria mais completa de fotos do espaço!
+                {% endif %}
+            </h1>
         </section>
         <section class="tags">
             <p class="tags__titulo">Busque por tags:</p>
