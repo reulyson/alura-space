@@ -27,7 +27,7 @@ def login(request): # Função para renderizar a página de login
                 messages.error(request, 'Usuário ou senha inválidos!')
                 return redirect('login') # Redireciona para a página de login
             
-    return render(request, 'usuarios/login.html', {'form': form})
+    return render(request, 'usuarios/login.html', {'form': form, 'usa_bootstrap': True})
 
 def cadastro(request): # Função para renderizar a página de cadastro
 

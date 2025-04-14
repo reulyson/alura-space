@@ -16,7 +16,8 @@ def index(request):
     categorias = Fotografia.OPCOES_CATEGORIA 
     return render(request,'galeria/index.html', {
         'cards': dados,
-        'categorias': categorias
+        'categorias': categorias,
+        'usa_bootstrap': False
     }) # Renderiza a página inicial da galeria
 
 ''' Função para renderizar a página da fotografia '''
