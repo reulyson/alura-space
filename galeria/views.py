@@ -23,6 +23,11 @@ def index(request):
 ''' Função para renderizar a página da fotografia '''
 def imagem(request, foto_id):
 
+    # Verifica se o usuário está logado
+    if not request.user.is_authenticated:
+        messages.error(request, 'Você precisa estar logado para acessar essa página.')
+        return redirect('login')
+
     fotografia = get_object_or_404(Fotografia, pk=foto_id) # Busca a fotografia pelo id
     
     # Adicionando as categorias
@@ -71,6 +76,11 @@ def buscar(request):
     })
 
 def categoria(request, categoria_nome):
+
+    # Verifica se o usuário está logado
+    if not request.user.is_authenticated:
+        messages.error(request, 'Você precisa estar logado para acessar essa página.')
+        return redirect('login')
 
     # Mapeando as categorias
     MAPA_CATEGORIAS = {

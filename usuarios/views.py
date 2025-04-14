@@ -74,6 +74,11 @@ def logout(request): # Função para deslogar o usuário
 
 def novas_fotos(request): # Função para renderizar a página de nova fotografia
 
+    # Verifica se o usuário está logado
+    if not request.user.is_authenticated:
+        messages.error(request, 'Você precisa estar logado para acessar essa página.')
+        return redirect('login')
+
     if request.method == 'POST': # Verifica se a requisição é do tipo POST (POST é usado para enviar dados)
         form = NovaImagemForm(request.POST, request.FILES) # Cria um formulário com os dados da requisição
         if form.is_valid(): # Verifica se o formulário é válido
