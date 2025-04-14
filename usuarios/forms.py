@@ -1,6 +1,7 @@
 from typing import Any
 from django import forms
 from django.contrib.auth.models import User # Importa o modelo User para usuários
+from  galeria.models import Fotografia
 
 
 ''' Formulario de login '''
@@ -126,3 +127,85 @@ class CadastroForm(forms.Form):
                 raise forms.ValidationError('As senhas devem ser iguais.')
             else:
                 return senha_2
+            
+class NovaImagemForm(forms.ModelForm):
+
+    # Campos
+    nome = forms.CharField(
+        label='Nome', # Rotulo
+        required=True, # Obrigatorio
+        max_length=100, # Tamanho
+        widget=forms.TextInput(
+            attrs={
+                'class': 'form-control',
+                'placeholder': 'Ex: Nome da Estrela'
+            }
+        ) 
+    )
+
+    legenda = forms.CharField(
+        label='Legenda', # Rotulo
+        required=True, # Obrigatorio
+        max_length=150, # Tamanho
+        widget=forms.TextInput(
+            attrs={
+                'class': 'form-control',
+                'placeholder': 'Ex: nasa.org/NASA-Image-of-the-Day'
+            }
+        ) 
+    )
+
+    categoria = forms.ChoiceField(
+        label='Categoria', # Rotulo
+        required=True, # Obrigatorio
+        choices=Fotografia.OPCOES_CATEGORIA,
+        widget=forms.Select(
+            attrs={
+                'class': 'form-control'
+            }
+        ) 
+    )
+
+    descricao = forms.CharField(
+        label='Descricao', # Rotulo
+        required=True, # Obrigatorio
+        max_length=100, # Tamanho
+        widget=forms.Textarea(
+            attrs={
+                'class': 'form-control',
+                'placeholder': 'Ex: Estrela no espaco'
+            }
+        )
+    )
+
+    foto = forms.ImageField(
+        label='Foto', # Rotulo
+        required=True, # Obrigatorio
+        widget=forms.FileInput(
+            attrs={
+                'class': 'form-control',
+                'accept': 'image/*'
+            }
+        )
+    )
+
+    publicada = forms.BooleanField(
+        label='Publicar', # Rotulo
+        required=False, # Obrigatorio
+        widget=forms.CheckboxInput(
+            attrs={
+                'class': 'form-check-input'
+            }
+        )
+    )
+
+    def clean_foto(self):
+        foto = self.cleaned_data.get('foto')
+        if not foto:
+            raise forms.ValidationError("Você deve selecionar uma imagem.")
+        return foto
+
+    class Meta:
+        model = Fotografia  # Especifique o modelo associado
+        fields = ['nome', 'legenda', 'categoria', 'descricao', 'foto', 'publicada']
+    

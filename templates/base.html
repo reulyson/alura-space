@@ -18,8 +18,11 @@
     {% endif %}
 </head>
 
-<body>
+<body></body>
 {% include 'partials/_menu.html' %} <!-- Incluindo o menu -->
+{% if request.resolver_match.url_name != 'novas_fotos' %}
+    {% include 'partials/_categoria.html' %}
+{% endif %}
 {% block content %}{% endblock content %} <!-- Conteúdo da página -->
 {% include 'partials/_footer.html' %} <!-- Incluindo o rodapé -->
 </body>

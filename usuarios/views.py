@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect # Importa as funções render e redirect
 from django.contrib.auth.models import User # Importa o modelo User para usuários
 from django.contrib import auth, messages # Importa o módulo auth para autenticação
-from .forms import LoginForm, CadastroForm # Importa os formulários
+from .forms import LoginForm, CadastroForm, NovaImagemForm # Importa os formulários
 
 def login(request): # Função para renderizar a página de login
 
@@ -65,9 +65,30 @@ def cadastro(request): # Função para renderizar a página de cadastro
 
 
 
-    return render(request, 'usuarios/cadastro.html', {'form': form})
+    return render(request, 'usuarios/cadastro.html', {'form': form, 'usa_bootstrap': True})
 
 def logout(request): # Função para deslogar o usuário
     auth.logout(request) # Desloga o usuário
     messages.success(request, 'Logout efetuado com sucesso!')
     return redirect('login')
+
+def novas_fotos(request): # Função para renderizar a página de nova fotografia
+
+    if request.method == 'POST': # Verifica se a requisição é do tipo POST (POST é usado para enviar dados)
+        form = NovaImagemForm(request.POST, request.FILES) # Cria um formulário com os dados da requisição
+        if form.is_valid(): # Verifica se o formulário é válido
+            try:
+                fotografia = form.save(commit=False) # Salva o formulário sem salvar no banco de dados
+                fotografia.usuario = request.user # Armazena o usuário que fez a fotografia
+                fotografia.save() # Salva a fotografia no banco de dados
+                messages.success(request, 'Fotografia salva com sucesso!')
+                return redirect('index') # Redireciona para a página inicial
+            except Exception as e:
+                messages.error(request, 'Erro ao salvar a fotografia!')
+        else:
+            messages.error(request, 'Corrija os erros abaixo:')
+            
+    else:
+        form = NovaImagemForm() # Cria um formulário vazio
+
+    return render(request, 'usuarios/novas_fotos.html', {'form': form, 'usa_bootstrap': True})
