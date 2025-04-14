@@ -24,7 +24,29 @@ def index(request):
 def imagem(request, foto_id):
 
     fotografia = get_object_or_404(Fotografia, pk=foto_id) # Busca a fotografia pelo id
-    return render(request, 'galeria/imagem.html', {'fotografia': fotografia}) # Renderiza a página da fotografia
+    
+    # Adicionando as categorias
+    categorias = Fotografia.OPCOES_CATEGORIA 
+    return render(request, 'galeria/imagem.html', {
+        'fotografia': fotografia,
+        'categorias': categorias,
+        'usa_bootstrap': True
+    }) # Renderiza a página da fotografia
+
+def deletar_foto(request, foto_id):
+
+    
+    foto = get_object_or_404(Fotografia, id=foto_id) # Busca a fotografia pelo id
+    
+    # Verifica se o usuário logado tem permissão para excluir a fotografia
+    if request.user == foto.usuario:
+        foto.delete() # Exclui a fotografia
+        messages.success(request, "Foto excluída com sucesso!")
+        return redirect('index')  # Redireciona para a página principal
+    else:
+        messages.error(request, "Você não tem permissão para excluir esta foto.")
+        return redirect('imagem', foto_id=foto_id)  # Volta para a página da foto
+        
 
 def buscar(request):
 

@@ -419,3 +419,7 @@ table {
     --bs-alert-bg: #d1e7dd;
     --bs-alert-border-color: #badbcc;
 }
+
+.imagem__deletar {
+    margin-top: 20px;
+}

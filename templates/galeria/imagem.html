@@ -15,6 +15,15 @@
                                 <p class="imagem__descricao">{{fotografia.legenda}}</p>
                                 <p class="imagem__texto">{{fotografia.descricao}}</p>
                             </div>
+                            <!-- Se o usuário estiver logado e for o dono da fotografia botão de excluir aparece -->
+                            {% if user.is_authenticated and user == fotografia.usuario %}
+                            <form method="post" action="{% url 'deletar' fotografia.id %}"> <!-- Formulário de exclusão -->
+                                {% csrf_token %}
+                                <button type="submit" class="btn btn-danger" onclick="return confirm('Tem certeza que deseja excluir esta foto?')">
+                                    <i class="fas fa-trash"></i> Excluir
+                                </button>
+                            </form>
+                            {% endif %}
                         </div>
                     </div>
                 </section>
