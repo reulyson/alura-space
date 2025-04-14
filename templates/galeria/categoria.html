@@ -5,21 +5,21 @@
                     <div class="cards">
                         <h2 class="cards__titulo">Navegue pela galeria</h2>
                         <ul class="cards__lista">
-                            {% if cards %} <!-- Se cards existir -->
-                            {% for fotografia in cards %} <!-- Para cada fotografia no cards -->
+                            {% if fotos_categoria %} <!-- Se cards existir -->
+                            {% for foto in fotos_categoria %}
                             <li class="card">
-                                <a href="{% url 'imagem' fotografia.id %}">
-                                {% if fotografia.foto == '' or fotografia.foto ==  null %} <!-- Se fotografia não tiver foto -->
+                                <a href="{% url 'imagem' foto.id %}">
+                                {% if foto.foto == '' or foto.foto ==  null %} <!-- Se fotografia não tiver foto -->
                                     <img class="card__imagem" src="{% static '/assets/imagens/galeria/not-found.png' %}" alt="foto">
                                 {% else %} <!-- Se fotografia tiver foto -->
-                                    <img class="card__imagem" src="{{ fotografia.foto.url }}" alt="foto">
+                                    <img class="card__imagem" src="{{ foto.foto.url }}" alt="{{ foto.nome }}">
                                 {% endif %} <!-- Fim do if -->
                                 </a>
-                                <span class="card__tag">Estrelas</span>
+                                <span class="card__tag">{{ foto.categoria }}</span>
                                 <div class="card__info">
-                                    <p class="card__titulo">{{ fotografia.nome }}</p>
+                                    <p class="card__titulo">{{ foto.nome }}</p>
                                     <div class="card__texto">
-                                        <p class="card__descricao">{{ fotografia.legenda }}</p>
+                                        <p class="card__descricao">{{ foto.legenda }}</p>
                                         <span>
                                             <img src="{% static '/assets/ícones/1x/favorite_outline.png' %}" alt="ícone de coração">
                                         </span>

@@ -4,7 +4,7 @@ Projeto desenvolvido durante a formação **"Django: crie aplicações em Python
 
 ---
 
-## 🚀 **Funcionalidades**
+## **Funcionalidades**
 
 - **Página inicial**: Exibe as imagens adicionadas e um texto informativo.
 - **Barra de busca**: Permite pesquisar por imagens ou conteúdos específicos.
@@ -15,7 +15,7 @@ Projeto desenvolvido durante a formação **"Django: crie aplicações em Python
 
 ---
 
-## 🛠️ **Tecnologias Utilizadas**
+## **Tecnologias Utilizadas**
 
 - **Django**: Framework web Python para desenvolvimento rápido e seguro.
 - **HTML/CSS**: Para a estruturação e estilização das páginas.
@@ -24,7 +24,7 @@ Projeto desenvolvido durante a formação **"Django: crie aplicações em Python
 
 ---
 
-## 📚 **Estrutura do Projeto**
+## **Estrutura do Projeto**
 
 ```
 alura-space/
@@ -80,7 +80,7 @@ alura-space/
 
 ---
 
-## ⚙️ **Como Executar o Projeto**
+## **Como Executar o Projeto**
 
 ### **Pré-requisitos**
 - Python 3.x instalado.
@@ -145,7 +145,7 @@ alura-space/
 
 ---
 
-## 📝 **Boas Práticas Aplicadas**
+## **Boas Práticas Aplicadas**
 
 - **DRY (Don't Repeat Yourself)**: Reutilização de código com templates e partials.
 - **Segurança**: Uso de variáveis de ambiente para proteger informações sensíveis.
@@ -178,7 +178,7 @@ alura-space/
 
 ---
 
-## 📚 **Aprendizados do Curso**
+## **Aprendizados do Curso**
 
 - Configuração de ambientes virtuais com `venv`.
 - Criação de projetos e apps no Django.
@@ -189,13 +189,13 @@ alura-space/
 
 ---
 
-## 🙌 **Agradecimentos**
+## **Agradecimentos**
 
 Agradeço à Alura pelo curso incrível e à comunidade Django por fornecer uma ferramenta tão poderosa para desenvolvimento web.
 
 ---
 
-## 💌 **Contato**
+## **Contato**
 
 Se tiver dúvidas ou sugestões, sinta-se à vontade para entrar em contato:
 
