@@ -19,7 +19,9 @@
     <main class="principal">
         <section class="menu-lateral">
             <nav class="menu-lateral__navegacao">
+                {% if request.user.is_authenticated %} <!-- Se o usuário estiver logado -->
                 <a href="{% url 'index' %}"><img src="{% static '/assets/ícones/1x/Home - ativo.png' %}"> Home</a>
+                {% endif %}
                 {% if not request.user.is_authenticated %} <!-- Se o usuário não estiver logado -->
                 <a href="{% url 'login' %}"><img src="{% static '/assets/ícones/1x/Mais vistas - ativo.png' %}"> Login</a>
                 <a href="{% url 'cadastro' %}"><img src="{% static '/assets/ícones/1x/Novas - ativo.png' %}"> Cadastro</a>
