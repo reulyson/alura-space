@@ -10,7 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.2/ref/settings/
 """
 
-import os
+import os, sys
 from pathlib import Path
 from dotenv import load_dotenv
 
@@ -18,6 +18,7 @@ load_dotenv()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
+sys.path.append(str(BASE_DIR/ 'apps'))
 
 
 # Quick-start development settings - unsuitable for production
@@ -41,8 +42,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'galeria.apps.GaleriaConfig', # Configuração da galeria
-    'usuarios.apps.UsuariosConfig', # Configuração dos usuários
+    'apps.galeria.apps.GaleriaConfig', # Configuração da galeria
+    'apps.usuarios.apps.UsuariosConfig', # Configuração dos usuários
 ]
 
 MIDDLEWARE = [
