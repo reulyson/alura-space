@@ -32,6 +32,7 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
+SITE_ID = 1
 
 # Application definition
 
@@ -44,6 +45,17 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'apps.galeria.apps.GaleriaConfig', # Configuração da galeria
     'apps.usuarios.apps.UsuariosConfig', # Configuração dos usuários
+    'allauth', # adiciona o allauth
+    'allauth.account', # adiciona o account que serve para gerenciar as contas
+    'allauth.socialaccount', # adiciona o socialaccount que serve para gerenciar as redes sociais
+    'allauth.socialaccount.providers.google', # adiciona o github
+    'django.contrib.sites', # gerenciador de sites
+]
+
+AUTHENTICATION_BACKENDS = [
+    
+    'django.contrib.auth.backends.ModelBackend', # Preciso para fazer login pelo nome de usuário no Django admin, independentemente do allauth.
+    'allauth.account.auth_backends.AuthenticationBackend', # Métodos de autenticação específicos do allauth, como login por e-mail.
 ]
 
 MIDDLEWARE = [
@@ -54,6 +66,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'allauth.account.middleware.AccountMiddleware',
 ]
 
 ROOT_URLCONF = 'setup.urls'
@@ -143,6 +156,35 @@ FILE_UPLOAD_MAX_MEMORY_SIZE = 20971520
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# Configurações específicas do provedor
+SOCIALACCOUNT_PROVIDERS = {
+    'google': {
+        'APP': {
+            'client_id': os.getenv('CLIENT_ID'),
+            'secret': os.getenv('SECRET'),
+            'key': ''
+        }
+    }
+}
+
+# URLs exatas (deve bater com o console)
+SOCIAL_AUTH_GOOGLE_OAUTH2_REDIRECT_URI = 'http://127.0.0.1:8000/auth/google/login/callback/'
+
+LOGIN_REDIRECT_URL = '/'
+
+LOGOUT_REDIRECT_URL = '/login'
+
+SOCIALACCOUNT_LOGIN_ON_GET = True # Permite o login por GET
+
+ACCOUNT_LOGOUT_ON_GET = True # Permite o logout por GET
+
+# Escopos necessários
+SOCIAL_AUTH_GOOGLE_OAUTH2_SCOPE = [
+    'https://www.googleapis.com/auth/userinfo.profile',
+    'https://www.googleapis.com/auth/userinfo.email',
+    'openid'
+]
 
 # Messages
 from django.contrib.messages import constants as messages

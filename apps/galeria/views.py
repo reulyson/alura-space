@@ -2,8 +2,11 @@ from django.shortcuts import render
 from .models import Fotografia
 from django.shortcuts import get_object_or_404, redirect
 from django.contrib import messages
+from django.contrib.auth.decorators import login_required
 
 ''' Função para renderizar a página inicial da galeria '''
+
+@login_required
 def index(request):
     
     # Verifica se o usuário está logado
