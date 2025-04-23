@@ -13,18 +13,13 @@ def index(request):
     if not request.user.is_authenticated:
         messages.error(request, 'Você precisa estar logado para acessar essa página.')
         return redirect('login')
+    
     dados = Fotografia.objects.order_by('-data_fotografia').filter(publicada=True) # Ordena as fotografias por data de publicação e exibe apenas as fotografias publicadas
-
-    # Adicionando as categorias
-    categorias = Fotografia.OPCOES_CATEGORIA 
     return render(request,'galeria/index.html', {
         'cards': dados,
-        'categorias': categorias,
-        'usa_bootstrap': False
+        'usa_filtro': True,
+        'usa_capa': True,
     }) # Renderiza a página inicial da galeria
-
-def teste(request):
-    return render(request, 'galeria/html.html')
 
 ''' Função para renderizar a página da fotografia '''
 def imagem(request, foto_id):
@@ -37,63 +32,33 @@ def imagem(request, foto_id):
     fotografia = get_object_or_404(Fotografia, pk=foto_id) # Busca a fotografia pelo id
     return render(request, 'galeria/imagem.html', {
         'fotografia': fotografia,
-        'usa_bootstrap': True
+        'usa_bootstrap': True,
+        'usa_capa': True,
     }) # Renderiza a página da fotografia
 
+''' Função que realiza a busca de fotografias '''
 def buscar(request):
 
-    # Verifica se o usuário está logado
-    if not request.user.is_authenticated:
+    if not request.user.is_authenticated:  # Verifica se o usuário está logado
         messages.error(request, 'Você precisa estar logado para acessar essa página.')
         return redirect('login')
 
-    busca = Fotografia.objects.order_by('-data_fotografia').filter(publicada=True) 
-
-    # Verifica se o usuário digitou algo no campo de busca
-    if 'buscar' in request.GET:
+    busca = Fotografia.objects.order_by('-data_fotografia').filter(publicada=True) # Ordena as fotografias por data de publicação e exibe apenas as fotografias publicadas
+    if 'buscar' in request.GET:  # Verifica se o usuário digitou algo no campo de busca
         nome_a_buscar = request.GET['buscar'] # Armazena o que o usuário digitou no campo de busca
         if nome_a_buscar:
             busca = busca.filter(nome__icontains=nome_a_buscar) # Faz a busca pelo nome da fotografia
 
-    # Adicionando as categorias
-    categorias = Fotografia.OPCOES_CATEGORIA
-    return render(request, 'galeria/buscar.html', {
-        'cards': busca,
-        'categorias': categorias
-    })
-# Função para renderizar a página da categoria
-def categoria(request, categoria_nome):
+    return render(request, 'galeria/index.html', {'cards': busca,})
 
-    # Verifica se o usuário está logado
-    if not request.user.is_authenticated:
-        messages.error(request, 'Você precisa estar logado para acessar essa página.')
-        return redirect('login')
+''' Função que filtra as fotografias por categoria '''
+def filtro(request, categoria):
+     
+     fotos = Fotografia.objects.order_by('-data_fotografia').filter(publicada=True, categoria=categoria)
+     return render(request, 'galeria/index.html', {'cards': fotos,})
 
-    # Mapeando as categorias
-    MAPA_CATEGORIAS = {
-        'NEBULOSA': 'NEBULOSA',
-        'ESTRELAS': 'ESTRELAS',
-        'PLANETA': 'PLANETA',
-        'GALAXIA': 'GALAXIA'
-    }
-
-    # Obtém o valor correto para filtar as fotografias
-    categoria_db = MAPA_CATEGORIAS.get(categoria_nome, categoria_nome)
-
-    fotos = Fotografia.objects.filter(
-        categoria=categoria_db,
-        publicada=True
-    ).order_by('-data_fotografia')
-
-    # Adicionando as categorias
-    categorias = Fotografia.OPCOES_CATEGORIA
-    return render(request, 'galeria/categoria.html', {
-        'fotos_categoria': fotos,
-        'categorias': categorias
-    })
-
-# Função para adicionar uma nova fotografia
-def novas_fotos(request): # Função para renderizar a página de nova fotografia
+''' Função para renderizar a página de nova fotografia '''
+def novas_fotos(request):
 
     # Verifica se o usuário está logado
     if not request.user.is_authenticated:
@@ -115,15 +80,15 @@ def novas_fotos(request): # Função para renderizar a página de nova fotogr
 
     return render(request, 'galeria/novas_fotos.html', {'form': form, 'usa_bootstrap': True})
 
-# Função para excluir uma fotografia
+''' Função para excluir uma fotografia '''
 def deletar_foto(request, foto_id):
 
     fotografia= Fotografia.objects.get(id=foto_id) # Busca a fotografia pelo id
     fotografia.delete() # Exclui a fotografia
     messages.success(request, "Foto excluída com sucesso!")
-
     return redirect('index')  # Volta para a página da fotografia
-    
+
+''' Função para editar uma fotografia '''
 def editar_foto(request, foto_id):
 
     fotografia= Fotografia.objects.get(id=foto_id) # Busca a fotografia pelo id

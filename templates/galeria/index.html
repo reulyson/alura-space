@@ -1,23 +1,7 @@
 {% extends 'shared/base.html' %} <!-- Trazendo o arquivo base -->
 {% load static %} <!-- carregando os arquivos estaticos -->
 {% block content %} <!-- Inicio do conteúdo da página -->
-            <section class="conteudo">
-                <section class="banner">
-                    <img class="banner__imagem" src="{% static '/assets/imagens/Banner(2).png' %}" alt="banner Alura Space">
-                    <h1 class="banner__titulo">
-                        Bem vindo(a) a galeria mais completa de fotos do espaço!
-                    </h1>
-                </section>
-                <section class="tags">
-                    <p class="tags__titulo">Busque por tags:</p>
-                    <ul class="tags__lista">
-                        {% for value, nome in categorias %}
-                        <li class="tags__tag">
-                            <a href="{% url 'categoria' value %}" style="color: white;">{{nome}}</a>
-                        </li>
-                        {% endfor %}
-                    </ul>
-                </section>
+
                 <section class="galeria">
                     <div class="cards">
                         <h2 class="cards__titulo">Navegue pela galeria</h2>
