@@ -15,11 +15,7 @@ def index(request):
         return redirect('login')
     
     dados = Fotografia.objects.order_by('-data_fotografia').filter(publicada=True) # Ordena as fotografias por data de publicação e exibe apenas as fotografias publicadas
-    return render(request,'galeria/index.html', {
-        'cards': dados,
-        'usa_filtro': True,
-        'usa_capa': True,
-    }) # Renderiza a página inicial da galeria
+    return render(request,'galeria/index.html', {'cards': dados}) # Renderiza a página inicial da galeria
 
 ''' Função para renderizar a página da fotografia '''
 def imagem(request, foto_id):
@@ -33,7 +29,6 @@ def imagem(request, foto_id):
     return render(request, 'galeria/imagem.html', {
         'fotografia': fotografia,
         'usa_bootstrap': True,
-        'usa_capa': True,
     }) # Renderiza a página da fotografia
 
 ''' Função que realiza a busca de fotografias '''
@@ -99,7 +94,7 @@ def editar_foto(request, foto_id):
         if form.is_valid(): # Verifica se o formulário é válido
             form.save() # Salva a fotografia no banco de dados
             messages.success(request, 'Fotografia salva com sucesso!')
-            return redirect('index') # Redireciona para a página inicial
+            return redirect('index')  # Redireciona para a página inicial
     
     return render(request, 'galeria/editar_foto.html', {
         'form': form,
