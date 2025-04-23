@@ -1,29 +1,30 @@
 {% extends 'shared/base.html' %} <!-- Trazendo o arquivo base -->
 {% load static %} <!-- carregando os arquivos estaticos -->
 {% block content %} <!-- Inicio do conteúdo da página -->
-            <section class="galeria" style="margin-left: 5em">
-                <form action="{% url 'login' %}" method="POST">
-                    {% csrf_token %} <!-- token de segurança -->
-                    <div class="row">
-                        {% for field in form.visible_fields %} <!-- percorrendo os campos do formulário -->
-                        <div class="col-12 col-lg-12" style="margin-bottom: 10px;">
-                            <label for="{{ field.id_for_label }}" style="color:#D9D9D9; margin-bottom: 5px;">{{ field.label }}</label> <!-- Cria um rótulo para o campo de formulário com o texto e ID gerados dinamicamente pelo Django -->
-                            {{ field }} <!-- Renderiza o campo de formulário -->
-                        </div>
-                        {% endfor %}
-                    </div>
-                    <div>
-                        <button type="submit" class="btn btn-success col-12" style="padding: top 5px;"> Logar </button>
-                    </div>
-                    <div class="tags__lista" style="padding: top 5px;">
-                        <a href="http://127.0.0.1:8000/auth/google/login/?process=login">
-                            <p>Conecte-se com o Google: 
-                                <img src="{% static '/assets/ícones/1x/google-plus-svgrepo-com.svg' %}">
-                            </p>
-                        </a>
-                    </div>
-                </form>
-            </section>
-        </main>
-    </div>
+<section class="galeria" style="margin-left: 5em">
+    <form action="{% url 'login' %}" method="POST">
+        {% csrf_token %} <!-- token de segurança -->
+        <div class="row">
+            {% for field in form.visible_fields %} <!-- percorrendo os campos do formulário -->
+            <div class="col-12 col-lg-12" style="margin-bottom: 10px;">
+                <label for="{{ field.id_for_label }}" style="color:#D9D9D9; margin-bottom: 5px;">{{ field.label }}</label>
+                <!-- Cria um rótulo para o campo de formulário com o texto e ID gerados dinamicamente pelo Django -->
+                {{ field }} <!-- Renderiza o campo de formulário -->
+            </div>
+            {% endfor %}
+        </div>
+        <div>
+            <button type="submit" class="btn btn-success col-12" style="padding: top 5px;"> Logar </button>
+        </div>
+        <div class="tags__lista" style="padding: top 5px;">
+            <a href="http://127.0.0.1:8000/auth/google/login/?process=login">
+                <p>Conecte-se com o Google:
+                    <img src="{% static 'assets/ícones/1x/google-plus-svgrepo-com.svg' %}">
+                </p>
+            </a>
+        </div>
+    </form>
+</section>
+</main>
+</div>
 {% endblock content %}

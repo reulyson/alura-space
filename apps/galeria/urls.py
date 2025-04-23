@@ -1,7 +1,5 @@
 from django.urls import path
 from .views import index, imagem, buscar, filtro, novas_fotos, deletar_foto, editar_foto
-from django.conf.urls.static import static
-from django.conf import settings
 
 ''' Caminhos para as páginas da galeria '''
 urlpatterns = [
@@ -12,4 +10,4 @@ urlpatterns = [
     path('novas-fotos', novas_fotos, name='novas_fotos'), # Página de nova fotografia
     path('editar-foto/<int:foto_id>', editar_foto, name='editar_foto'), # Página de edição
     path('deletar/<int:foto_id>', deletar_foto, name='deletar'), # Rota para deletar
-]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+]

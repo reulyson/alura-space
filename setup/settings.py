@@ -50,6 +50,7 @@ INSTALLED_APPS = [
     'allauth.socialaccount', # adiciona o socialaccount que serve para gerenciar as redes sociais
     'allauth.socialaccount.providers.google', # adiciona o github
     'django.contrib.sites', # gerenciador de sites
+    'storages', # adiciona o storage
 ]
 
 AUTHENTICATION_BACKENDS = [
@@ -130,23 +131,55 @@ USE_I18N = True
 
 USE_TZ = True
 
+# AWS Configuração
+
+AWS_ACCESS_KEY_ID = os.getenv('AWS_ACCESS_KEY_ID')
+
+AWS_SECRET_ACCESS_KEY = os.getenv('AWS_SECRET_ACCESS_KEY')
+
+AWS_STORAGE_BUCKET_NAME = os.getenv('AWS_STORAGE_BUCKET_NAME')
+
+AWS_S3_CUSTOM_DOMAIN = f'{AWS_STORAGE_BUCKET_NAME}.s3.amazonaws.com'
+
+AWS_S3_OBJECT_PARAMETERS = {
+    'CacheControl': 'max-age=86400',
+}
+
+AWS_LOCATION = 'static'
+
+AWS_DEFAULT_ACL = 'public-read'
+
+AWS_QUERYSTRING_AUTH = False
+
+AWS_HEADERS = {
+    'Access-Control-Allow-Origin': '*',
+}
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.2/howto/static-files/
 
-STATIC_URL = 'static/' # URL para arquivos estáticos
+STORAGES = {
+    "default": {
+        "BACKEND": "storages.backends.s3.S3Storage",
+    },
+    "staticfiles": {
+        "BACKEND": "storages.backends.s3.S3Storage",
+    },
+}
+
+STATIC_URL = f'https://{AWS_S3_CUSTOM_DOMAIN}/static/' # URL para arquivos estáticos
 
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'setup/static') # Diretório dos arquivos estáticos
 ]
 
-STATIC_ROOT = os.path.join(BASE_DIR, 'static') # Diretório raiz dos arquivos estáticos
+# STATIC_ROOT = os.path.join(BASE_DIR, 'static') # Diretório raiz dos arquivos estáticos
 
 # Media
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media') # Diretório raiz dos arquivos de mídia
 
-MEDIA_URL = '/media/' # URL para arquivos de mídia
+MEDIA_URL = f'https://{AWS_S3_CUSTOM_DOMAIN}/media/' # URL para arquivos de mídia
 
 # Tamanho máximo de upload (20MB)
 DATA_UPLOAD_MAX_MEMORY_SIZE = 20971520
