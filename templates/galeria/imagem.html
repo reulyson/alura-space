@@ -1,6 +1,13 @@
 {% extends 'shared/base.html' %} <!-- Trazendo o arquivo base -->
 {% load static %} <!-- carregando os arquivos estaticos -->
 {% block content %} <!-- Inicio do conteúdo da página -->
+        <section class="conteudo">
+            <section class="banner">
+                <img class="banner__imagem" src="{% static '/assets/imagens/Banner(2).png' %}" alt="banner Alura Space">
+                <h1 class="banner__titulo">
+                    Bem vindo(a) a galeria mais completa de fotos do espaço!
+                </h1>
+            </section>
             <section class="conteudo">
                 <section class="imagem">
                     <div class="imagem__conteudo">
@@ -17,26 +24,20 @@
                             </div>
                             <!-- Se o usuário estiver logado e for o dono da fotografia botão de excluir aparece -->
                             {% if user.is_authenticated and user == fotografia.usuario %}
-                            <form method="post" action="{% url 'deletar' fotografia.id %}"> <!-- Formulário de exclusão -->
-                                {% csrf_token %}
-                                <button type="submit" style="color:#fff; 
-                                background-color: #dc3545; 
-                                border-color: #dc3545; 
-                                user-select: none;
-                                border: 1px solid transparent;
-                                padding: .375rem .75rem;
-                                font-size: 1rem;
-                                line-height: 1.5;
-                                border-radius: .25rem;" 
-                                onclick="return confirm('Tem certeza que deseja excluir esta foto?')">
-                                    <i class="fas fa-trash"></i> Excluir
-                                </button>
-                            </form>
+                            <div>
+                                <a href="{% url 'deletar' fotografia.id %}">
+                                    <button class="btn btn-danger col-12" style="padding: top 5px;"> Apagar</button>
+                                </a>
+                                <a href="{% url 'editar_foto' fotografia.id %}">
+                                    <button class="btn btn-success col-12" style="padding: top 5px;">Editar</button>
+                                </a>
+                            </div>
                             {% endif %}
                         </div>
                     </div>
                 </section>
             </section>
-        </main>
-    </div>
+        </section>
+    </main>
+</div>
 {% endblock content %} <!-- Fim do conteúdo da página -->

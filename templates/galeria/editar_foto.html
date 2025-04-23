@@ -1,0 +1,29 @@
+{% extends 'shared/base.html' %} <!-- Trazendo o arquivo base -->
+{% load static %} <!-- carregando os arquivos estaticos -->
+{% block content %} <!-- Inicio do conteúdo da página -->
+
+            <section class="galeria" style="margin-left: 5em">
+                <form action="{% url 'editar_foto' fotografia.id %}" method="POST" enctype="multipart/form-data"> <!-- Cria um formulário de cadastro -->
+                    {% csrf_token %} <!-- token de segurança -->
+                    <div class="row">
+                        {% for field in form.visible_fields %} <!-- percorrendo os campos do formulário -->
+                        <div class="col-12 col-lg-12" style="margin-bottom: 10px;">
+                            <label for="{{ field.id_for_label }}" style="color:#D9D9D9; margin-bottom: 5px;">{{ field.label }}</label> <!-- Cria um rótulo para o campo de formulário com o texto e ID gerados dinamicamente pelo Django -->
+                            {{ field }} <!-- Renderiza o campo de formulário -->
+                        </div>
+                        {% for error in field.errors %} <!-- percorrendo os erros do formulário -->
+                        <div class="alert alert-danger">
+                            {{ error }}
+                        </div>
+                        {% endfor %}
+                        {% endfor %}
+                    </div>
+                    <div>
+                        <button type="submit" class="btn btn-success col-12" style="padding: top 5px;"> Editar </button>
+                    </div>
+                </form>
+            </section>
+        </main>
+    </div>
+
+{% endblock content %}

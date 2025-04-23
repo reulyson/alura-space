@@ -20,9 +20,6 @@
 
 <body>
     {% include 'partials/_menu.html' %} <!-- Incluindo o menu -->
-    {% if request.resolver_match.url_name != 'novas_fotos' %} <!-- Se a página não for a página de nova fotografia -->
-        {% include 'partials/_categoria.html' %} <!-- Incluindo as categorias -->
-    {% endif %}
     {% block content %}{% endblock content %} <!-- Conteúdo da página -->
     {% include 'partials/_footer.html' %} <!-- Incluindo o rodapé -->
 </body>

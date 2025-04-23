@@ -3,9 +3,9 @@ from .models import Fotografia
 from django.shortcuts import get_object_or_404, redirect
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
+from .forms import NovaImagemForm # Importa os formulários
 
 ''' Função para renderizar a página inicial da galeria '''
-
 @login_required
 def index(request):
     
@@ -23,6 +23,9 @@ def index(request):
         'usa_bootstrap': False
     }) # Renderiza a página inicial da galeria
 
+def teste(request):
+    return render(request, 'galeria/html.html')
+
 ''' Função para renderizar a página da fotografia '''
 def imagem(request, foto_id):
 
@@ -32,29 +35,10 @@ def imagem(request, foto_id):
         return redirect('login')
 
     fotografia = get_object_or_404(Fotografia, pk=foto_id) # Busca a fotografia pelo id
-    
-    # Adicionando as categorias
-    categorias = Fotografia.OPCOES_CATEGORIA 
     return render(request, 'galeria/imagem.html', {
         'fotografia': fotografia,
-        'categorias': categorias,
-        'usa_bootstrap': False
+        'usa_bootstrap': True
     }) # Renderiza a página da fotografia
-
-def deletar_foto(request, foto_id):
-
-    
-    foto = get_object_or_404(Fotografia, id=foto_id) # Busca a fotografia pelo id
-    
-    # Verifica se o usuário logado tem permissão para excluir a fotografia
-    if request.user == foto.usuario:
-        foto.delete() # Exclui a fotografia
-        messages.success(request, "Foto excluída com sucesso!")
-        return redirect('index')  # Redireciona para a página principal
-    else:
-        messages.error(request, "Você não tem permissão para excluir esta foto.")
-        return redirect('imagem', foto_id=foto_id)  # Volta para a página da foto
-        
 
 def buscar(request):
 
@@ -72,12 +56,12 @@ def buscar(request):
             busca = busca.filter(nome__icontains=nome_a_buscar) # Faz a busca pelo nome da fotografia
 
     # Adicionando as categorias
-    categorias = Fotografia.OPCOES_CATEGORIA        
+    categorias = Fotografia.OPCOES_CATEGORIA
     return render(request, 'galeria/buscar.html', {
         'cards': busca,
         'categorias': categorias
     })
-
+# Função para renderizar a página da categoria
 def categoria(request, categoria_nome):
 
     # Verifica se o usuário está logado
@@ -106,4 +90,54 @@ def categoria(request, categoria_nome):
     return render(request, 'galeria/categoria.html', {
         'fotos_categoria': fotos,
         'categorias': categorias
+    })
+
+# Função para adicionar uma nova fotografia
+def novas_fotos(request): # Função para renderizar a página de nova fotografia
+
+    # Verifica se o usuário está logado
+    if not request.user.is_authenticated:
+        messages.error(request, 'Você precisa estar logado para acessar essa página.')
+        return redirect('login')
+
+    form = NovaImagemForm() # Cria um formulário vazio
+    if request.method == 'POST': # Verifica se a requisição é do tipo POST (POST é usado para enviar dados)
+        form = NovaImagemForm(request.POST, request.FILES) # Cria um formulário com os dados da requisição
+        if form.is_valid(): # Verifica se o formulário é válido
+            try:
+                fotografia = form.save(commit=False) # Valida os dados mas não sala no banco de dados
+                fotografia.usuario = request.user # Armazena o usuário que fez a fotografia
+                fotografia.save() # Salva a fotografia no banco de dados
+                messages.success(request, 'Fotografia salva com sucesso!')
+                return redirect('index') # Redireciona para a página inicial
+            except Exception as e:
+                messages.error(request, 'Erro ao salvar a fotografia!')
+
+    return render(request, 'galeria/novas_fotos.html', {'form': form, 'usa_bootstrap': True})
+
+# Função para excluir uma fotografia
+def deletar_foto(request, foto_id):
+
+    fotografia= Fotografia.objects.get(id=foto_id) # Busca a fotografia pelo id
+    fotografia.delete() # Exclui a fotografia
+    messages.success(request, "Foto excluída com sucesso!")
+
+    return redirect('index')  # Volta para a página da fotografia
+    
+def editar_foto(request, foto_id):
+
+    fotografia= Fotografia.objects.get(id=foto_id) # Busca a fotografia pelo id
+    form = NovaImagemForm(instance=fotografia) # Cria um formulário com os dados da fotografia
+
+    if request.method == 'POST':
+        form = NovaImagemForm(request.POST, request.FILES, instance=fotografia)
+        if form.is_valid(): # Verifica se o formulário é válido
+            form.save() # Salva a fotografia no banco de dados
+            messages.success(request, 'Fotografia salva com sucesso!')
+            return redirect('index') # Redireciona para a página inicial
+    
+    return render(request, 'galeria/editar_foto.html', {
+        'form': form,
+        'fotografia': fotografia,
+        'usa_bootstrap': True
     })

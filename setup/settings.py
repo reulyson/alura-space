@@ -171,7 +171,7 @@ SOCIALACCOUNT_PROVIDERS = {
 # URLs exatas (deve bater com o console)
 SOCIAL_AUTH_GOOGLE_OAUTH2_REDIRECT_URI = 'http://127.0.0.1:8000/auth/google/login/callback/'
 
-LOGIN_REDIRECT_URL = '/'
+LOGIN_REDIRECT_URL = '/home'
 
 LOGOUT_REDIRECT_URL = '/login'
 
