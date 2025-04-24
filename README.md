@@ -7,8 +7,7 @@ Projeto desenvolvido durante a formação **"Django: crie aplicações em Python
 | :sparkles: Nome        | **alura-space**
 | :label: Tecnologias | Python, Django, HTML/CSS, AWS (S3, IAM), SQLite, OAuth (Google)
 
-<!-- Inserir imagem com a #vitrinedev ao final do link -->
-![Captura de tela 2025-04-24 103939](https://github.com/user-attachments/assets/dbae00cf-62f2-4d47-8741-84542d315fe9#vitrinedev)
+![](https://via.placeholder.com/1200x500.png?text=imagem+lindona+do+meu+projeto#vitrinedev)
 
 # Detalhes do projeto
 
