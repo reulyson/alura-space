@@ -2,7 +2,15 @@
 
 Projeto desenvolvido durante a formação **"Django: crie aplicações em Python"** da Alura. O Alura Space é uma aplicação web que exibe informações sobre a diversos fenômenos do espaço como Galáxias, Nebulosas e etc. O objetivo do projeto é aplicar os conhecimentos e boas práticas do framework Django para criar aplicações web.
 
----
+| :placard: Vitrine.Dev |     |
+| -------------  | --- |
+| :sparkles: Nome        | **Alura Space**
+| :label: Tecnologias | python, django, SQLite, AWS, OAuth
+
+<!-- Inserir imagem com a #vitrinedev ao final do link -->
+![Captura de tela 2025-04-24 103939](https://github.com/user-attachments/assets/dbae00cf-62f2-4d47-8741-84542d315fe9#vitrinedev)
+
+# Detalhes do projeto
 
 ## **Funcionalidades**
 
@@ -274,4 +282,3 @@ Se tiver dúvidas ou sugestões, sinta-se à vontade para entrar em contato:
 
 - **Email**: reulyson@gmail.com
 - **GitHub**: [Reulyson Wanzeler](https://github.com/reulyson)
-
