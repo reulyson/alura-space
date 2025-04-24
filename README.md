@@ -71,116 +71,64 @@ Projeto desenvolvido durante a formação **"Django: crie aplicações em Python
 
 ```
 alura-space/
-├── apps/
-│   ├── galeria/   # aplicação voltada para a exibição da galeria de imagens
-│   │   ├── migrations/
-│   │   ├── __init__.py
-│   │   ├── admin.py
-│   │   ├── apps.py
-│   │   ├── forms.py
-│   │   ├── models.py
-│   │   ├── tests.py
-│   │   ├── urls.py   # rotas usadas
-│   │   ├── views.py   # lógicas das páginas
-│   │
-│   ├── usuarios/   # aplicação voltada para a exibição das páginas de login e cadastro
-│   │   ├── migrations/
-│   │   ├── __init__.py
-│   │   ├── admin.py
-│   │   ├── apps.py
-│   │   ├── forms.py
-│   │   ├── models.py
-│   │   ├── tests.py
-│   │   ├── urls.py   # rotas usadas
-│   │   ├── views.py   # lógicas das páginas
-│   │
-├── setup/
-│   ├── static/   # arquivos estaticos a serem carregagos
-│   │   ├── assets/
-│   │   │   ├── favicon/
-│   │   │   ├── ícones/
-│   │   │   ├── imagens/
-│   │   │   ├── logo/
-│   │   │
-│   │   ├── styles/   # estilização das páginas
-│   │   │   ├── style.css
-│   ├── __init__.py
-│   ├── asgi.py
-│   ├── settings.py   # configuração do projeto
-│   ├── urls.py   # organização geral das urls por aplicação
-│   ├── wsgi.py
-│   │
-├── static/   # arquivos estaticos para produção
-│   │   ├── admin/
-│   │   ├── assets/
-│   │   ├── styles/
-│   │
-├── templates/   # pastas geral dos templates usados no projeto
-│   │   ├── galeria/   # galeria de imagens
-│   │   │   ├── editar_foto.html
-│   │   │   ├── index.html   # página inicial
-│   │   │   ├── imagem.html
-│   │   │   ├── novas_fotos.html
-│   │   │
-│   │   ├── partials/ # partes fixas
-│   │   │   │   ├── _alertas   # monta as menssagens de aviso nas páginas
-│   │   │   │   ├── _footer.html   # monta o cabeçãlho
-│   │   │   │   ├── _menu.html   # monta um menu
-│   │   │
-│   │   ├── shared/ # páginas base compartilhas com as demais do projeto
-│   │   │   │   ├── base.html   # estrutura base de página
-│   │   │
-│   │   ├── usuarios/   # páginas de acesso dos usuários
-│   │   │   ├── cadastro.html
-│   │   │   ├── login.html
-├── .gitignore
-├── manage.py
-├── README.md
-├── requirements.txt
-```
-## 🏗️ **Estrutura do Projeto**
-```
-alura-space/
 ├── apps/ # Aplicações Django
-│ ├── galeria/ # 🖼️ App de Galeria
-│ │ ├── 📂 migrations/ # Migrações do banco
-│ │ ├── 📄 admin.py # Config Admin
-│ │ ├── 📄 forms.py # Formulários
-│ │ ├── 📄 models.py # Modelos de dados
-│ │ ├── 📄 urls.py # 🛣️ Rotas específicas
-│ │ └── 📄 views.py # 🧠 Lógica das páginas
-│ │
-│ └── 📂 usuarios/ # 👥 App de Usuários
-│ ├── 📂 migrations/
-│ ├── 📄 forms.py # Forms de autenticação
-│ └── 📄 models.py # Modelo User customizado
-│
-├── 📁 setup/ # Configuração principal
-│ ├── 📂 static/ # 🎨 Assets estáticos
-│ │ ├── 📂 assets/
-│ │ │ ├── 📂 favicon/ # Ícone do site
-│ │ │ └── 📂 imagens/ # Imagens base
-│ │ └── 📂 styles/
-│ │ └── 📄 style.css # CSS principal
-│ │
-│ ├── 📄 settings.py # ⚙️ Configurações globais
-│ └── 📄 urls.py # 🌐 Rotas principais
-│
-├── 📁 templates/ # 🎭 Templates HTML
-│ ├── 📂 galeria/
-│ │ ├── 📄 index.html # 🏠 Página inicial
-│ │ └── 📄 imagem.html # 🔍 Detalhe da foto
-│ │
-│ ├── 📂 partials/ # 🧩 Componentes reutilizáveis
-│ │ ├── 📄 _header.html # 🔝 Cabeçalho
-│ │ └── 📄 _pagination.html # 🔢 Navegação
-│ │
-│ └── 📂 shared/
-│ └── 📄 base.html # 📐 Layout base
-│
-├── 📄 .env # 🔒 Variáveis de ambiente
-├── 📄 manage.py # 🛠️ CLI do Django
-└── 📄 requirements.txt # 📦 Dependências
+│ ├── galeria/ # App de Galeria
+│ │ ├── migrations/ # Migrações do banco
+│ │ ├── admin.py # Config Admin
+│ │ ├── apps.py
+│ │ ├── forms.py # Formulários
+│ │ ├── models.py # Modelos de dados
+│ │ ├── tests.py
+│ │ ├── urls.py # Rotas específicas
+│ │ └── views.py# Lógica das páginas
+│ ├── usuarios/ # App de Usuários
+│ │ ├── migrations/
+│ │ ├── admin.py
+│ │ ├── apps.py
+│ │ ├── forms.py # Forms de autenticação
+│ │ ├── models.py # Modelo User customizado
+│ │ ├── tests.py
+│ │ ├── urls.py
+│ │ └── views.py
+├── setup/ # Configuração principal
+│ ├── static/
+│ │ ├── assets/ # Assets estáticos
+│ │ │ ├── favicon/ 
+│ │ │ ├── ícones/ # Ícone do site
+│ │ │ ├── imagens/ # Imagens base
+│ │ │ └── logo/
+│ │ └── styles/
+│ │   └── style.css # CSS principal
+│ ├── asgi.py
+│ │ └── settings.py # Configurações globais
+│ ├── urls.py # Rotas principais
+│ └── wsgi.py
+├── static/
+│ ├── admin/
+│ ├── assets/
+│ └── styles/
+├── templates/ # Templates HTML
+│ ├── galeria/
+│ │ ├── editar_foto.html # Página de edição
+│ │ ├── index.html # Página inicial
+│ │ ├── imagem.html # Detalhe da foto
+│ │ └── novas_fotos.html # Página de adicionar fotos
+│ ├── partials/ # Componentes reutilizáveis
+│ │ ├── _alertas.html 
+│ │ ├── _footer.html # Cabeçalho
+│ │ └── _menu.html # Navegação
+│ ├── shared/
+│ │ └── base.html # Layout base
+│ ├── usuarios/ # Templates de autenticação
+│ │ ├── cadastro.html
+│ │ └── login.html
+├── .gitignore
+├── .env # Variáveis de ambiente
+├── manage.py # CLI do Django
+├── README.md
+└── requirements.txt # Dependências
+```
+
 ---
 
 ## **Como Executar o Projeto**
