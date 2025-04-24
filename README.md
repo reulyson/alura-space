@@ -138,7 +138,7 @@ alura-space/
 - [Git](https://git-scm.com/)
 - Conta AWS (para recursos S3/IAM)
 - Credenciais OAuth do Google (opcional)
-```
+
 ### **Configuração Inicial**
 
 1. **Clonagem do Repositório**
