@@ -4,35 +4,67 @@ Projeto desenvolvido durante a formação **"Django: crie aplicações em Python
 
 | :placard: Vitrine.Dev |     |
 | -------------  | --- |
-| :sparkles: Nome        | **Alura Space**
-| :label: Tecnologias | python, django, SQLite, AWS, OAuth
+| :sparkles: Nome        | **alura-space**
+| :label: Tecnologias | Python, Django, HTML/CSS, AWS (S3, IAM), SQLite, OAuth (Google)
 
 <!-- Inserir imagem com a #vitrinedev ao final do link -->
 ![Captura de tela 2025-04-24 103939](https://github.com/user-attachments/assets/dbae00cf-62f2-4d47-8741-84542d315fe9#vitrinedev)
 
 # Detalhes do projeto
 
-## **Funcionalidades**
+## Funcionalidades Implementadas
 
-- **Página inicial**: Exibe as imagens adicionadas e um texto informativo.
-- **Barra de busca**: Permite pesquisar por imagens ou conteúdos específicos.
-- **Filtro de imagens**: Mostra botões com a categoria de cada imagem cadastrada e filtra a apresentação das imagens de acordo com a categoria escolhida.
-- **Cadastro e login**: Foi cirado uma sessão de cadastro de novos usuarios e login para restrigir o acesso as funções da apliação.
-- **CRUD realizado pelos usuários**: Permite que usuários cadastrados possam adicionar fotos e permite que a mesma imagem seja removida ou editada pelo usuário que a adicionou.
-- **Autenticação e Autorização**: Gerenciamento de usuários e permissões no Django Admin.
-- **CRUD realizado pelos ADMIN**: Permite adição, edição, remoção e visualização de fotografias no sistema através do Django Admin.
-- **Gerenciamento de Grupos**: Controle de permissões por grupos no Django Admin.
-- **Autenticação Google**: Uso do OAuth 2.0 para realizar login através da autenticação do google.
+### **Página Inicial**
+- Exibição dinâmica de imagens cadastradas no sistema.
+- Texto informativo (Legendas).
 
+### **Busca e Filtros**
+- Barra de Busca: Pesquisa por imagens ou conteúdos específicos (títulos).
+- Filtro por Categoria: Botões interativos para filtrar imagens conforme categorias pré-definidas.
+
+### **Autenticação e Autorização**
+- Cadastro & Login Tradicional:
+   - Registro de novos usuários com validação de dados.
+   - Restrição de acesso a funcionalidades críticas (ex.: CRUD) apenas para usuários logados.
+- Autenticação Social (OAuth 2.0):
+   - Login via Google, integrado com a biblioteca django-allauth ou python-social-auth.
+- Controle de Acesso:
+   - Django Admin: Gerenciamento de usuários, grupos e permissões.
+   - Grupos Personalizados: Atribuição de permissões diferenciadas (ex.: "Usuários Comuns" vs. "Administradores").
+
+### **CRUD para Usuários**
+- Create: Upload de novas imagens (com campos como título, categoria, descrição).
+- Read: Visualização de imagens próprias e públicas.
+- Update: Edição de metadados (título, descrição) das imagens do próprio usuário.
+- Delete: Remoção de imagens (apenas pelo usuário que as cadastrou).
+
+### **CRUD para Administradores**
+- Django Admin:
+   - Adição/edição/remoção de qualquer imagem ou usuário.
+   - Moderação de conteúdo (ex.: desativar imagens inapropriadas).
+
+### **Infraestrutura e Segurança**
+- AWS IAM: Políticas de acesso seguro para gerenciar permissões de serviços AWS (ex.: S3).
+
+- Armazenamento:
+   - SQLite (dev) para metadados.
+   - AWS S3 para armazenamento de arquivos de mídia.
 ---
 
 ## **Tecnologias Utilizadas**
 
-- **Django**: Framework web Python para desenvolvimento rápido e seguro.
-- **HTML/CSS**: Para a estruturação e estilização das páginas.
-- **Templates Django**: Para reutilização de código e organização do projeto.
-- **Banco de Dados SQLite**: Utilizado para armazenar imagens e informações dos usuários (localmente).
-- **AWS**: Utilizado para armazenar arquivos estáticos e de mídia fora da aplicação.
+### Backend & Infraestrutura
+- **Python3.x**: Linguagem de programação principal para desenvolvimento backend
+- **Django**: Framework Python para desenvolvimento web rápido e seguro (arquitetura MVC).
+- **AWS (Amazon Web Services)**:
+   - S3 (Simple Storage Service): Armazenamento escalável de arquivos estáticos (CSS, JS) e mídia (imagens, vídeos).
+   - IAM (Identity and Access Management): Gerenciamento de usuários, permissões e políticas de acesso seguro aos serviços AWS.
+- **SQLite**: Banco de dados relacional para ambiente de desenvolvimento (dados de usuários e metadados).
+- **Autenticação (OAuth)**: Autenticação via OAuth 2.0 (Google) com Django-allauth.
+
+### Frontend
+- **HTML/CSS**: Estrutura e estilização das páginas.
+- **Templates Django**: Reutilização de código frontend com lógica integrada ao backend.
 
 ---
 
@@ -204,11 +236,24 @@ alura-space/
 
 ## **Boas Práticas Aplicadas**
 
-- **DRY (Don't Repeat Yourself)**: Reutilização de código com templates e partials.
-- **Segurança**: Uso de variáveis de ambiente para proteger informações sensíveis.
-- **Modularização**: Criação de apps específicos para funcionalidades distintas.
-- **Gerenciamento de Usuários**: Uso do Django Admin para controle de acessos e permissões.
-- **Uso de Grupos**: Permissões organizadas por grupos para facilitar o gerenciamento.
+### **Princípios de Código**
+- **DRY (Don't Repeat Yourself)**:  
+  - Templates base com herança (`base.html`)  
+  - Componentes reutilizáveis (`partials/`)   
+
+### **Segurança**
+- **Variáveis de Ambiente**:  
+  - Credenciais e chaves em `.env`
+  - Exclusão de dados sensíveis do versionamento  
+
+### **Arquitetura**
+- **Modularização**: Apps Django separados por contexto (ex: `users`, `gallery`)   
+
+### **Controle de Acesso**
+- **Django Admin**:  
+  - Painel customizado com filtros e buscas  
+  - Actions para operações em massa  
+- **Gestão por Grupos**: Permissões granulares (Admin/Editor/Usuário)  
 
 ---
 
@@ -259,14 +304,48 @@ Página de login com a possibilidade de acesso através da autenticação com o 
 
 ## **Aprendizados do Curso**
 
-- Configuração de ambientes virtuais com `venv`.
-- Criação de projetos e apps no Django.
-- Uso de templates e partials para organizar o código HTML.
-- Integração de arquivos estáticos (CSS, imagens) no Django.
-- Gerenciamento de usuários, permissões e grupos pelo Django Admin.
-- Boas práticas de desenvolvimento, como o princípio DRY.
-- Criação de buckets e IAM no AWS para gerenciar e armazenar mídias em nuvem.
-- Autenticação de usuários com o OAuth 2.0
+### **Configuração e Estrutura**
+- **Ambientes Virtuais**: Isolamento de dependências com `python -m venv`
+- **Projetos Django**: 
+  - Estruturação com `django-admin startproject`
+  - Criação de apps modulares com `startapp`
+
+### **Frontend & Templates**
+- **Sistema de Templates**:
+  - Herança com `{% extends %}`
+  - Componentes reutilizáveis (`includes/`)
+- **Arquivos Estáticos**:
+  - Organização em `static/`
+  - Carregamento via `{% static %}`
+
+### **Autenticação & Segurança**
+- **Django Admin**:
+  - Customização de `admin.py`
+  - Gerenciamento de grupos e permissões
+- **OAuth 2.0**:
+  - Integração com Google
+  - Fluxo de autenticação social
+
+### **Cloud & DevOps**
+- **AWS S3**:
+  - Criação e configuração de buckets
+  - Políticas de acesso via IAM
+- **Variáveis de Ambiente**:
+  - Gerenciamento seguro de credenciais
+
+### **Boas Práticas**
+- **Princípio DRY**:
+  - Reutilização de código
+  - Criação de utilitários
+- **Modularização**:
+  - Separação por funcionalidades
+  - Apps independentes
+
+### **Habilidades Desenvolvidas**
+1. Arquitetura de projetos escaláveis
+2. Segurança aplicada (usuários/arquivos)
+3. Integração com serviços cloud
+4. Padrões de código limpo
 
 ---
 
