@@ -8,12 +8,13 @@ Projeto desenvolvido durante a formação **"Django: crie aplicações em Python
 
 - **Página inicial**: Exibe as imagens adicionadas e um texto informativo.
 - **Barra de busca**: Permite pesquisar por imagens ou conteúdos específicos.
-- **Categoria das imagens**: Mostra um card com a categoria de cada imagem cadastrada e filtra a apresentação das imagens de acordo com a categoria.
+- **Filtro de imagens**: Mostra botões com a categoria de cada imagem cadastrada e filtra a apresentação das imagens de acordo com a categoria escolhida.
 - **Cadastro e login**: Foi cirado uma sessão de cadastro de novos usuarios e login para restrigir o acesso as funções da apliação.
-- **Adição e Remoção de imagens**: Permite que usuários cadastrados possam adicionar fotos e permite que a mesma imagem seja removida pelo usuário que a adicionou.
+- **CRUD realizado pelos usuários**: Permite que usuários cadastrados possam adicionar fotos e permite que a mesma imagem seja removida ou editada pelo usuário que a adicionou.
 - **Autenticação e Autorização**: Gerenciamento de usuários e permissões no Django Admin.
-- **CRUD de Fotografias**: Permite adição, edição, remoção e visualização de fotografias no sistema através do Django Admin.
+- **CRUD realizado pelos ADMIN**: Permite adição, edição, remoção e visualização de fotografias no sistema através do Django Admin.
 - **Gerenciamento de Grupos**: Controle de permissões por grupos no Django Admin.
+- **Autenticação Google**: Uso do OAuth 2.0 para realizar login através da autenticação do google.
 
 ---
 
@@ -22,7 +23,8 @@ Projeto desenvolvido durante a formação **"Django: crie aplicações em Python
 - **Django**: Framework web Python para desenvolvimento rápido e seguro.
 - **HTML/CSS**: Para a estruturação e estilização das páginas.
 - **Templates Django**: Para reutilização de código e organização do projeto.
-- **Banco de Dados SQLite**: Utilizado para armazenar imagens e informações dos usuários.
+- **Banco de Dados SQLite**: Utilizado para armazenar imagens e informações dos usuários (localmente).
+- **AWS**: Utilizado para armazenar arquivos estáticos e de mídia fora da aplicação.
 
 ---
 
@@ -30,15 +32,29 @@ Projeto desenvolvido durante a formação **"Django: crie aplicações em Python
 
 ```
 alura-space/
-├── galeria/   # aplicação voltada para a exibição da galeria de imagens
-│   ├── migrations/
-│   ├── __init__.py
-│   ├── admin.py
-│   ├── apps.py
-│   ├── models.py
-│   ├── tests.py
-│   ├── urls.py   # rotas usadas
-│   ├── views.py   # lógicas das páginas
+├── apps/
+│   ├── galeria/   # aplicação voltada para a exibição da galeria de imagens
+│   │   ├── migrations/
+│   │   ├── __init__.py
+│   │   ├── admin.py
+│   │   ├── apps.py
+│   │   ├── forms.py
+│   │   ├── models.py
+│   │   ├── tests.py
+│   │   ├── urls.py   # rotas usadas
+│   │   ├── views.py   # lógicas das páginas
+│   │
+│   ├── usuarios/   # aplicação voltada para a exibição das páginas de login e cadastro
+│   │   ├── migrations/
+│   │   ├── __init__.py
+│   │   ├── admin.py
+│   │   ├── apps.py
+│   │   ├── forms.py
+│   │   ├── models.py
+│   │   ├── tests.py
+│   │   ├── urls.py   # rotas usadas
+│   │   ├── views.py   # lógicas das páginas
+│   │
 ├── setup/
 │   ├── static/   # arquivos estaticos a serem carregagos
 │   │   ├── assets/
@@ -46,6 +62,7 @@ alura-space/
 │   │   │   ├── ícones/
 │   │   │   ├── imagens/
 │   │   │   ├── logo/
+│   │   │
 │   │   ├── styles/   # estilização das páginas
 │   │   │   ├── style.css
 │   ├── __init__.py
@@ -53,33 +70,30 @@ alura-space/
 │   ├── settings.py   # configuração do projeto
 │   ├── urls.py   # organização geral das urls por aplicação
 │   ├── wsgi.py
+│   │
 ├── static/   # arquivos estaticos para produção
 │   │   ├── admin/
-│   │   │   ├── css/
-│   │   │   ├── img/
-│   │   │   ├── js/
 │   │   ├── assets/
-│   │   │   ├── favicon/
-│   │   │   ├── ícones/
-│   │   │   ├── imagens/
-│   │   │   ├── logo/
 │   │   ├── styles/
-│   │   │   ├── style.css
+│   │
 ├── templates/   # pastas geral dos templates usados no projeto
 │   │   ├── galeria/   # galeria de imagens
-│   │   │   ├── buscar.html   # página para resultado das buscas
-│   │   │   ├── categoria.html   # página para resultado do filtro de categoria
-│   │   │   ├── index.html   # página principal
-│   │   │   ├── imagem.html   # página para imagem selecionada
-│   │   ├── partials/
+│   │   │   ├── editar_foto.html
+│   │   │   ├── index.html   # página inicial
+│   │   │   ├── imagem.html
+│   │   │   ├── novas_fotos.html
+│   │   │
+│   │   ├── partials/ # partes fixas
 │   │   │   │   ├── _alertas   # monta as menssagens de aviso nas páginas
-│   │   │   │   ├── _categoria   # monta o menu com as categorias nas páginas destinadas
-│   │   │   │   ├── _footer.html   # monta o cabeçãlho nas páginas destinadas
-│   │   │   │   ├── _menu.html   # monta um menu que está disponive para todas as págias
+│   │   │   │   ├── _footer.html   # monta o cabeçãlho
+│   │   │   │   ├── _menu.html   # monta um menu
+│   │   │
+│   │   ├── shared/ # páginas base compartilhas com as demais do projeto
+│   │   │   │   ├── base.html   # estrutura base de página
+│   │   │
 │   │   ├── usuarios/   # páginas de acesso dos usuários
-│   │   │   ├── cadastro.html   # página que realiza o cadastro de novos usuários
-│   │   │   ├── login.html   # página que realiza o login de acesso
-│   │   │   ├── novas_fotos.html   # página destinada para adição de novas fotos
+│   │   │   ├── cadastro.html
+│   │   │   ├── login.html
 ├── .gitignore
 ├── manage.py
 ├── README.md
@@ -120,9 +134,36 @@ alura-space/
    ```
 
 4. **Configurar variáveis de ambiente**:
-   - Crie um arquivo `.env` na raiz do projeto e adicione a `SECRET_KEY` do Django:
+   - Crie um arquivo `.env` na raiz do projeto e adicione a as credenciais de acesso nessárias:
      ```
-     SECRET_KEY=sua_chave_secreta_aqui
+     # Credenciais Django
+      SECRET_KEY = 'chave_djnago'
+      
+      # Credenciais de autenticação do google
+      CLIENT_ID = 'client_id.apps.googleusercontent.com'
+      SECRET = 'chave_secreta'
+      
+      # Credenciais AWS
+      AWS_ACCESS_KEY_ID = 'chave_acesso'
+      AWS_SECRET_ACCESS_KEY = 'chave_secreta'
+      AWS_STORAGE_BUCKET_NAME = 'nome_bucket_aws')
+     
+     ```
+     - As credenciais serão carregadas no settings.py:
+     ```python
+     ...
+     # SECURITY WARNING: keep the secret key used in production secret!
+      SECRET_KEY = os.getenv('SECRET_KEY')
+     ...
+     # AWS Configuração
+     AWS_ACCESS_KEY_ID = os.getenv('AWS_ACCESS_KEY_ID')
+     
+     AWS_SECRET_ACCESS_KEY = os.getenv('AWS_SECRET_ACCESS_KEY')
+     
+     AWS_STORAGE_BUCKET_NAME = os.getenv('AWS_STORAGE_BUCKET_NAME')
+     
+     AWS_S3_CUSTOM_DOMAIN = f'{AWS_STORAGE_BUCKET_NAME}.s3.amazonaws.com'
+     ...
      ```
 
 5. **Aplicar migrações**:
@@ -166,26 +207,30 @@ alura-space/
 ## 📸 **Capturas de Tela**
 
 ### Página de Login
-![Página de Login](https://github.com/user-attachments/assets/d338f7b7-18f1-4a80-919f-67a26debab34)
+Página de login com a possibilidade de acesso através da autenticação com o Google.
+![Página de Login](https://github.com/user-attachments/assets/7a443779-923b-4fc0-a5f8-20945c872d3b)
 
 ### Página de Cadastro
 ![Página de Cadastro](https://github.com/user-attachments/assets/fa2f7283-2aa0-4c8c-a905-f8d01d409905)
 
 ### Página Inicial
-![Página Inicial](https://github.com/user-attachments/assets/36a544c5-f594-4f19-acc0-ba26762ddd62)
+![Página Inicial](https://github.com/user-attachments/assets/3033c76f-eec9-4cc3-bed0-4022087d30ae)
 
 ### Página de Imagem
-![Página de Imagem](https://github.com/user-attachments/assets/749cd224-282a-40c7-bdd1-820f9d396700)
-O usuário logado não tem permissao para excluir fotos de outro usuário
+- O usuário logado não tem permissao para excluir fotos de outro usuário
+![Página de Imagem](https://github.com/user-attachments/assets/304b769e-b255-4922-b9dd-4e12d8f0bd28)
 
-![Página de Imagem](https://github.com/user-attachments/assets/2608032e-2674-48e3-b437-4a6be4c7d6a7)
-Já selecionando imagem adicionada por ele mesmo o botão de 'Excluir' fica disponível
+- Quando mudamos de usuário o botão de 'Apagar' e 'Editar' fica disponível
+![image](https://github.com/user-attachments/assets/49f90c55-fa23-494e-bfb0-2e31f419b101)
 
-### Página de Busca
-![Página de Busca](https://github.com/user-attachments/assets/7a71e05c-279d-42b0-bba3-7aad1778f722)
+### Página de Edição
+![Página de Edição](https://github.com/user-attachments/assets/661218b7-c45a-4a08-be53-4e10a7ac6df1)
 
-### Página de Categoria
-![Página de Categoria](https://github.com/user-attachments/assets/d6912ca1-51ea-4138-ba27-6325574b19e5)
+### Função de Busca
+![Página de Busca](https://github.com/user-attachments/assets/ea3bcaf6-1126-411b-899f-91832bd5ae94)
+
+### Função de Filtro
+![Página de Categoria](https://github.com/user-attachments/assets/be9cedcb-db41-4aec-9d7d-714e5e99ceb0)
 
 ### Django Admin
 ![Django Admin](https://github.com/user-attachments/assets/064b6b98-5215-4525-ba2b-8607e45b6500)
@@ -212,6 +257,8 @@ Já selecionando imagem adicionada por ele mesmo o botão de 'Excluir' fica disp
 - Integração de arquivos estáticos (CSS, imagens) no Django.
 - Gerenciamento de usuários, permissões e grupos pelo Django Admin.
 - Boas práticas de desenvolvimento, como o princípio DRY.
+- Criação de buckets e IAM no AWS para gerenciar e armazenar mídias em nuvem.
+- Autenticação de usuários com o OAuth 2.0
 
 ---
 
