@@ -145,93 +145,78 @@ alura-space/
 ## **Como Executar o Projeto**
 
 ### **Pré-requisitos**
-- Python 3.x instalado.
-- Pip (gerenciador de pacotes do Python).
+- [Python 3.10+](https://www.python.org/downloads/)
+- [Git](https://git-scm.com/)
+- Conta AWS (para recursos S3/IAM)
+- Credenciais OAuth do Google (opcional)
 
-### **Passos para Configuração**
+### **Configuração Inicial**
 
-1. **Clonar o repositório**:
+1. **Clonagem do Repositório**
    ```bash
    git clone https://github.com/reulyson/alura-space.git
    cd alura-space
    ```
+   
+2. Ambiente Virtual
+   ```bash
+   # Linux/macOS
+   python3 -m venv venv
+   source venv/bin/activate
+   
+   # Windows
+   python -m venv venv
+   venv\Scripts\activate
+   ```
+   
+3. Instalação de Dependências
 
-2. **Criar e ativar o ambiente virtual**:
-   - No macOS/Linux:
-     ```bash
-     python3 -m venv venv
-     source venv/bin/activate
-     ```
-   - No Windows:
-     ```bash
-     python -m venv venv
-     venv\Scripts\Activate
-     ```
-
-3. **Instalar dependências**:
    ```bash
    pip install -r requirements.txt
    ```
 
-4. **Configurar variáveis de ambiente**:
-   - Crie um arquivo `.env` na raiz do projeto e adicione a as credenciais de acesso nessárias:
-     ```
-     # Credenciais Django
-      SECRET_KEY = 'chave_djnago'
-      
-      # Credenciais de autenticação do google
-      CLIENT_ID = 'client_id.apps.googleusercontent.com'
-      SECRET = 'chave_secreta'
-      
-      # Credenciais AWS
-      AWS_ACCESS_KEY_ID = 'chave_acesso'
-      AWS_SECRET_ACCESS_KEY = 'chave_secreta'
-      AWS_STORAGE_BUCKET_NAME = 'nome_bucket_aws')
-     
-     ```
-     - As credenciais serão carregadas no settings.py:
-     ```python
-     ...
-     # SECURITY WARNING: keep the secret key used in production secret!
-      SECRET_KEY = os.getenv('SECRET_KEY')
-     ...
-     # AWS Configuração
-     AWS_ACCESS_KEY_ID = os.getenv('AWS_ACCESS_KEY_ID')
-     
-     AWS_SECRET_ACCESS_KEY = os.getenv('AWS_SECRET_ACCESS_KEY')
-     
-     AWS_STORAGE_BUCKET_NAME = os.getenv('AWS_STORAGE_BUCKET_NAME')
-     
-     AWS_S3_CUSTOM_DOMAIN = f'{AWS_STORAGE_BUCKET_NAME}.s3.amazonaws.com'
-     ...
-     ```
+## **Configuração de Segurança**
+1. Arquivo .env (crie na raiz do projeto)
 
-5. **Aplicar migrações**:
+   ```ini
+   # Django
+   SECRET_KEY=sua_chave_secreta_aqui
+   DEBUG=True  # Desative em produção!
+   
+   # Google OAuth
+   SOCIAL_AUTH_GOOGLE_OAUTH2_KEY=seu_client_id
+   SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET=seu_secret
+   
+   # AWS
+   AWS_ACCESS_KEY_ID=seu_access_key
+   AWS_SECRET_ACCESS_KEY=seu_secret_key
+   AWS_STORAGE_BUCKET_NAME=seu-bucket-s3
+   AWS_S3_REGION_NAME=us-east-1  # Ajuste conforme sua região
+   ```
+2. Configuração AWS:
+
+- Crie um bucket S3 com políticas de acesso
+- Configure usuário IAM com permissões S3FullAccess
+
+## **Execução**
+1. Migrações do Banco de Dados
+
    ```bash
    python manage.py migrate
    ```
+2. Criação de Superusuário
 
-6. **Criar um superusuário para acessar o Django Admin**:
    ```bash
    python manage.py createsuperuser
    ```
+3. Iniciar Servidor
 
-7. **Executar o servidor**:
    ```bash
    python manage.py runserver
-   ```
 
-8. **Acessar a aplicação**:
-   Abra o navegador e acesse:
-   ```
-   http://127.0.0.1:8000/
-   ```
-
-9. **Acessar o Django Admin**:
-   ```
-   http://127.0.0.1:8000/admin
-   ```
-
+## **Acessos**
+- Aplicação: http://localhost:8000
+- Admin: http://localhost:8000/admin
 ---
 
 ## **Boas Práticas Aplicadas**
@@ -257,48 +242,39 @@ alura-space/
 
 ---
 
-## 📸 **Capturas de Tela**
+## **Capturas de Tela**
 
-### Página de Login
-Página de login com a possibilidade de acesso através da autenticação com o Google.
-![Página de Login](https://github.com/user-attachments/assets/7a443779-923b-4fc0-a5f8-20945c872d3b)
+### **Autenticação**
+| ![Página de Login](https://github.com/user-attachments/assets/7a443779-923b-4fc0-a5f8-20945c872d3b) | ![Página de Cadastro](https://github.com/user-attachments/assets/fa2f7283-2aa0-4c8c-a905-f8d01d409905) |
+|---------------------------------------------------------------------------------------------------|-------------------------------------------------------------------------------------------------------|
+| **Login** com opção de autenticação Google                                                        | **Cadastro** de novos usuários                                                                        |
 
-### Página de Cadastro
-![Página de Cadastro](https://github.com/user-attachments/assets/fa2f7283-2aa0-4c8c-a905-f8d01d409905)
+### **Galeria**
+| ![Página Inicial](https://github.com/user-attachments/assets/3033c76f-eec9-4cc3-bed0-4022087d30ae) | ![Função de Busca](https://github.com/user-attachments/assets/ea3bcaf6-1126-411b-899f-91832bd5ae94) |
+|---------------------------------------------------------------------------------------------------|----------------------------------------------------------------------------------------------------|
+| Página inicial com grid de imagens                                                                | Sistema de **busca** por conteúdo                                                                  |
 
-### Página Inicial
-![Página Inicial](https://github.com/user-attachments/assets/3033c76f-eec9-4cc3-bed0-4022087d30ae)
+| ![Função de Filtro](https://github.com/user-attachments/assets/be9cedcb-db41-4aec-9d7d-714e5e99ceb0) | ![Página de Imagem](https://github.com/user-attachments/assets/304b769e-b255-4922-b9dd-4e12d8f0bd28) |
+|-----------------------------------------------------------------------------------------------------|------------------------------------------------------------------------------------------------------|
+| Filtragem por **categorias**                                                                        | Detalhe da imagem com controle de permissões                                                         |
 
-### Página de Imagem
-- O usuário logado não tem permissao para excluir fotos de outro usuário
-![Página de Imagem](https://github.com/user-attachments/assets/304b769e-b255-4922-b9dd-4e12d8f0bd28)
+### **Controle de Conteúdo**
+| ![Página de Edição](https://github.com/user-attachments/assets/661218b7-c45a-4a08-be53-4e10a7ac6df1) | ![Permissões](https://github.com/user-attachments/assets/49f90c55-fa23-494e-bfb0-2e31f419b101) |
+|-----------------------------------------------------------------------------------------------------|------------------------------------------------------------------------------------------------|
+| Formulário de **edição** de fotografias                                                             | Visão demonstração das **permissões** por usuário                                              |
 
-- Quando mudamos de usuário o botão de 'Apagar' e 'Editar' fica disponível
-![image](https://github.com/user-attachments/assets/49f90c55-fa23-494e-bfb0-2e31f419b101)
+### **Painel Administrativo**
+| ![Django Admin](https://github.com/user-attachments/assets/064b6b98-5215-4525-ba2b-8607e45b6500) | ![Usuários](https://github.com/user-attachments/assets/622d81a3-6494-4b80-be73-d5f27ffe0b10) |
+|-------------------------------------------------------------------------------------------------|---------------------------------------------------------------------------------------------|
+| Visão geral do **painel admin**                                                                 | Gerenciamento de **usuários**                                                               |
 
-### Página de Edição
-![Página de Edição](https://github.com/user-attachments/assets/661218b7-c45a-4a08-be53-4e10a7ac6df1)
+| ![Fotografias](https://github.com/user-attachments/assets/fe593998-06e5-4202-a052-f744b5ebc05c) | ![Modificar](https://github.com/user-attachments/assets/5396de39-25b7-419f-8722-453957227e00) |
+|------------------------------------------------------------------------------------------------|----------------------------------------------------------------------------------------------|
+| Listagem de todas as fotografias                                                                | Interface de **modificação** de itens                                                        |
 
-### Função de Busca
-![Página de Busca](https://github.com/user-attachments/assets/ea3bcaf6-1126-411b-899f-91832bd5ae94)
-
-### Função de Filtro
-![Página de Categoria](https://github.com/user-attachments/assets/be9cedcb-db41-4aec-9d7d-714e5e99ceb0)
-
-### Django Admin
-![Django Admin](https://github.com/user-attachments/assets/064b6b98-5215-4525-ba2b-8607e45b6500)
-
-### Django Admin Pasta Fotografias
-![Django Admin](https://github.com/user-attachments/assets/fe593998-06e5-4202-a052-f744b5ebc05c)
-
-### Django Admin Modificar Fotografia
-![Django Admin](https://github.com/user-attachments/assets/5396de39-25b7-419f-8722-453957227e00)
-
-### Django Admin Adicionar Fotografia
-![Django Admin](https://github.com/user-attachments/assets/1f9a8155-7e89-456b-a9df-bcb7f0238824)
-
-### Django Admin Usuários
-![Django Admin Usuários](https://github.com/user-attachments/assets/622d81a3-6494-4b80-be73-d5f27ffe0b10)
+| ![Adicionar](https://github.com/user-attachments/assets/1f9a8155-7e89-456b-a9df-bcb7f0238824) |
+|----------------------------------------------------------------------------------------------|
+| Formulário para **adicionar** novas fotografias                                               |
 
 ---
 
