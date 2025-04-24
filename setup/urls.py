@@ -25,7 +25,7 @@ urlpatterns = [
     path('', include('galeria.urls')), # URLs da galeria
     path('', include('usuarios.urls')), # URLs dos usuários
     path('auth/', include('allauth.urls')), # URLs do allauth
-] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+]
 
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
