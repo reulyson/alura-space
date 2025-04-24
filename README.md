@@ -138,7 +138,49 @@ alura-space/
 ├── README.md
 ├── requirements.txt
 ```
-
+## 🏗️ **Estrutura do Projeto**
+```
+alura-space/
+├── apps/ # Aplicações Django
+│ ├── galeria/ # 🖼️ App de Galeria
+│ │ ├── 📂 migrations/ # Migrações do banco
+│ │ ├── 📄 admin.py # Config Admin
+│ │ ├── 📄 forms.py # Formulários
+│ │ ├── 📄 models.py # Modelos de dados
+│ │ ├── 📄 urls.py # 🛣️ Rotas específicas
+│ │ └── 📄 views.py # 🧠 Lógica das páginas
+│ │
+│ └── 📂 usuarios/ # 👥 App de Usuários
+│ ├── 📂 migrations/
+│ ├── 📄 forms.py # Forms de autenticação
+│ └── 📄 models.py # Modelo User customizado
+│
+├── 📁 setup/ # Configuração principal
+│ ├── 📂 static/ # 🎨 Assets estáticos
+│ │ ├── 📂 assets/
+│ │ │ ├── 📂 favicon/ # Ícone do site
+│ │ │ └── 📂 imagens/ # Imagens base
+│ │ └── 📂 styles/
+│ │ └── 📄 style.css # CSS principal
+│ │
+│ ├── 📄 settings.py # ⚙️ Configurações globais
+│ └── 📄 urls.py # 🌐 Rotas principais
+│
+├── 📁 templates/ # 🎭 Templates HTML
+│ ├── 📂 galeria/
+│ │ ├── 📄 index.html # 🏠 Página inicial
+│ │ └── 📄 imagem.html # 🔍 Detalhe da foto
+│ │
+│ ├── 📂 partials/ # 🧩 Componentes reutilizáveis
+│ │ ├── 📄 _header.html # 🔝 Cabeçalho
+│ │ └── 📄 _pagination.html # 🔢 Navegação
+│ │
+│ └── 📂 shared/
+│ └── 📄 base.html # 📐 Layout base
+│
+├── 📄 .env # 🔒 Variáveis de ambiente
+├── 📄 manage.py # 🛠️ CLI do Django
+└── 📄 requirements.txt # 📦 Dependências
 ---
 
 ## **Como Executar o Projeto**
@@ -148,7 +190,7 @@ alura-space/
 - [Git](https://git-scm.com/)
 - Conta AWS (para recursos S3/IAM)
 - Credenciais OAuth do Google (opcional)
-
+```
 ### **Configuração Inicial**
 
 1. **Clonagem do Repositório**
