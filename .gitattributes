@@ -1,4 +1,0 @@
-# Ignorar HTML,CSS e JS nas estatísticas
-*.html linguist-detectable=false
-*.css linguist-detectable=false
-*.js linguist-detectable=false
